@@ -444,10 +444,11 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             uint v = (uint)value;   // support negative numbers
             while (v >= 0x80)
             {
-                await WriteAsync((short)(byte)(v | 0x80), cancellationToken).ConfigureAwait(false);
+                await WriteAsync((byte)(v | 0x80), cancellationToken).ConfigureAwait(false);
                 v >>= 7;
             }
-            await WriteAsync((short)(byte)v, cancellationToken).ConfigureAwait(false);
+            await WriteAsync((byte)v, cancellationToken).ConfigureAwait(false);
         }
+
     }
 }
