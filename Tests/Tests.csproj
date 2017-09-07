@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+<PropertyGroup>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.3.0-beta4-build3742" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.0-beta4-build3742" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Overby.Extensions.AsyncBinaryReaderWriter\Overby.Extensions.AsyncBinaryReaderWriter.csproj" />
+  </ItemGroup>
+
+</Project>

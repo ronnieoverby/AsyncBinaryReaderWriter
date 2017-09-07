@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreTests", "XUnitTestProje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFxTests", "NetFxTests\NetFxTests.csproj", "{7A290EB3-867B-429F-ADE0-6A3111C7990D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{7E64C453-E448-4729-89CC-C1E89B6CE42E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7A290EB3-867B-429F-ADE0-6A3111C7990D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A290EB3-867B-429F-ADE0-6A3111C7990D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A290EB3-867B-429F-ADE0-6A3111C7990D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E64C453-E448-4729-89CC-C1E89B6CE42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E64C453-E448-4729-89CC-C1E89B6CE42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E64C453-E448-4729-89CC-C1E89B6CE42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E64C453-E448-4729-89CC-C1E89B6CE42E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
