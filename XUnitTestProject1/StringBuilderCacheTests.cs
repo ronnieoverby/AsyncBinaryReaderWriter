@@ -23,10 +23,12 @@ namespace CoreTests
         [Fact]
         public void CanGetStringAndRelease()
         {
+            const string s1 = nameof(CanGetStringAndRelease);
+
             var sb = StringBuilderCache.Acquire();
-            sb.Append(nameof(CanGetStringAndRelease));
-            var s = StringBuilderCache.GetStringAndRelease(sb);
-            Assert.Equal(nameof(CanGetStringAndRelease), s);            
+            sb.Append(s1);
+            var s2 = StringBuilderCache.GetStringAndRelease(sb);
+            Assert.Equal(s1, s2);            
         }
     }
 }
