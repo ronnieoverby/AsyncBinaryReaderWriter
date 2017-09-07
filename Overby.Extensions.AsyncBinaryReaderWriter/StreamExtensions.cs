@@ -9,7 +9,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
         public static async Task<int> ReadByteAsync(this Stream stream, CancellationToken cancellationToken)
         {
             var buffer = new byte[1];
-            var read = await stream.ReadAsync(buffer, 0, 1, cancellationToken);
+            var read = await stream.ReadAsync(buffer, 0, 1, cancellationToken).ConfigureAwait(false);
             if (read == 0)
                 return -1;
 

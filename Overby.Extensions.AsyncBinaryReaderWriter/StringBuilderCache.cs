@@ -1,51 +1,62 @@
 ﻿using System;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 
 namespace Overby.Extensions.AsyncBinaryReaderWriter
 {
-    public static class StringBuilderCache
+    /// <summary>
+    /// Proxy to the internal StringBuilderCache via cached delegates
+    /// </summary>
+    internal static class StringBuilderCache
     {
-        // The value 360 was chosen in discussion with performance experts as a compromise between using
-        // as litle memory (per thread) as possible and still covering a large part of short-lived
-        // StringBuilder creations on the startup path of VS designers.
-        private const int MAX_BUILDER_SIZE = 360;
+        static readonly Type type = typeof(object).Assembly.GetType("System.Text.StringBuilderCache");
 
-        [ThreadStatic]
-        private static StringBuilder CachedInstance;
+        public static StringBuilder Acquire(int capacity = 16) =>
+            _acquire.Value(capacity);
 
-        public static StringBuilder Acquire(int capacity = 16)
+        private static readonly Lazy<Func<int, StringBuilder>> _acquire = new Lazy<Func<int, StringBuilder>>(CreateAcquireDelegate);
+
+        private static Func<int, StringBuilder> CreateAcquireDelegate()
         {
-            if (capacity <= MAX_BUILDER_SIZE)
-            {
-                StringBuilder sb = CachedInstance;
-                if (sb != null)
-                {
-                    // Avoid stringbuilder block fragmentation by getting a new StringBuilder
-                    // when the requested size is larger than the current capacity
-                    if (capacity <= sb.Capacity)
-                    {
-                        CachedInstance = null;
-                        sb.Clear();
-                        return sb;
-                    }
-                }
-            }
-            return new StringBuilder(capacity);
+            var exp_capacity = Expression.Parameter(typeof(int));
+            var acquireInfo = type.GetMethod(nameof(Acquire),
+                BindingFlags.Static | BindingFlags.Public);
+
+            var exp_call_acquire = Expression.Call(acquireInfo, exp_capacity);
+            var lambda = Expression.Lambda(exp_call_acquire, exp_capacity);
+            return (Func<int, StringBuilder>)lambda.Compile();
         }
 
-        public static void Release(StringBuilder sb)
+        public static void Release(StringBuilder sb) =>
+            _release.Value(sb);
+
+        private static readonly Lazy<Action<StringBuilder>> _release = new Lazy<Action<StringBuilder>>(CreateReleaseDelegate);
+
+        private static Action<StringBuilder> CreateReleaseDelegate()
         {
-            if (sb.Capacity <= MAX_BUILDER_SIZE)
-            {
-                CachedInstance = sb;
-            }
+            var exp_sb = Expression.Parameter(typeof(StringBuilder));
+            var releaseMethod = type.GetMethod(nameof(Release),
+                BindingFlags.Static | BindingFlags.Public);
+            var exp_call_release = Expression.Call(releaseMethod, exp_sb);
+            var lambda = Expression.Lambda(exp_call_release, exp_sb);
+            return (Action<StringBuilder>)lambda.Compile();
         }
 
-        public static string GetStringAndRelease(StringBuilder sb)
+        public static string GetStringAndRelease(StringBuilder sb) =>
+            _getStringAndRelease.Value(sb);
+
+        private static readonly Lazy<Func<StringBuilder, string>> _getStringAndRelease =
+            new Lazy<Func<StringBuilder, string>>(CreateGetStringAndReleaseDelegate);
+
+        private static Func<StringBuilder, string> CreateGetStringAndReleaseDelegate()
         {
-            string result = sb.ToString();
-            Release(sb);
-            return result;
+            var exp_sb = Expression.Parameter(typeof(StringBuilder));
+            var releaseMethod = type.GetMethod(nameof(GetStringAndRelease),
+                BindingFlags.Static | BindingFlags.Public);
+            var exp_call = Expression.Call(releaseMethod, exp_sb);
+            var lambda = Expression.Lambda(exp_call, exp_sb);
+            return (Func<StringBuilder, string>)lambda.Compile();
         }
     }
 

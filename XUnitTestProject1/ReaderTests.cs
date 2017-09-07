@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace CoreTests
+namespace Overby.Extensions.Tests
 {
     public class ReaderTests
     {
