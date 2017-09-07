@@ -5,10 +5,6 @@ VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Overby.Extensions.AsyncBinaryReaderWriter", "Overby.Extensions.AsyncBinaryReaderWriter\Overby.Extensions.AsyncBinaryReaderWriter.csproj", "{5DE714C4-66E0-4F25-9961-579C546A3C1C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreTests", "XUnitTestProject1\CoreTests.csproj", "{66F3F79A-A09F-4EA0-982A-D5D3B359B1C6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFxTests", "NetFxTests\NetFxTests.csproj", "{7A290EB3-867B-429F-ADE0-6A3111C7990D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{7E64C453-E448-4729-89CC-C1E89B6CE42E}"
 EndProject
 Global
@@ -21,14 +17,6 @@ Global
 		{5DE714C4-66E0-4F25-9961-579C546A3C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DE714C4-66E0-4F25-9961-579C546A3C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DE714C4-66E0-4F25-9961-579C546A3C1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66F3F79A-A09F-4EA0-982A-D5D3B359B1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66F3F79A-A09F-4EA0-982A-D5D3B359B1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66F3F79A-A09F-4EA0-982A-D5D3B359B1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66F3F79A-A09F-4EA0-982A-D5D3B359B1C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A290EB3-867B-429F-ADE0-6A3111C7990D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A290EB3-867B-429F-ADE0-6A3111C7990D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A290EB3-867B-429F-ADE0-6A3111C7990D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A290EB3-867B-429F-ADE0-6A3111C7990D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7E64C453-E448-4729-89CC-C1E89B6CE42E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E64C453-E448-4729-89CC-C1E89B6CE42E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E64C453-E448-4729-89CC-C1E89B6CE42E}.Release|Any CPU.ActiveCfg = Release|Any CPU
