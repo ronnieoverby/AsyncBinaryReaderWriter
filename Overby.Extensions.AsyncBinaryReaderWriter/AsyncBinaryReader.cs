@@ -107,7 +107,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             if (!_stream.CanSeek)
                 return -1;
             long origPos = _stream.Position;
-            int ch = await ReadAsync(cancellationToken);
+            int ch = await ReadAsync(cancellationToken).ConfigureAwait(false);
             _stream.Position = origPos;
             return ch;
         }
@@ -125,7 +125,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
 
         public virtual async Task<bool> ReadBooleanAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(1, cancellationToken);
+            await FillBufferAsync(1, cancellationToken).ConfigureAwait(false);
             return (_buffer[0] != 0);
         }
 
@@ -134,7 +134,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             // Inlined to avoid some method call overhead with FillBuffer.
             if (_stream == null) __Error.FileNotOpen();
 
-            int b = await _stream.ReadByteAsync(cancellationToken);
+            int b = await _stream.ReadByteAsync(cancellationToken).ConfigureAwait(false);
             if (b == -1)
                 __Error.EndOfFile();
             return (byte)b;
@@ -142,13 +142,13 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
 
         public virtual async Task<sbyte> ReadSByteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(1, cancellationToken);
+            await FillBufferAsync(1, cancellationToken).ConfigureAwait(false);
             return (sbyte)(_buffer[0]);
         }
 
         public virtual async Task<char> ReadCharAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            int value = await ReadAsync(cancellationToken);
+            int value = await ReadAsync(cancellationToken).ConfigureAwait(false);
             if (value == -1)
             {
                 __Error.EndOfFile();
@@ -158,31 +158,31 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
 
         public virtual async Task<short> ReadInt16Async(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(2, cancellationToken);
+            await FillBufferAsync(2, cancellationToken).ConfigureAwait(false);
             return (short)(_buffer[0] | _buffer[1] << 8);
         }
 
         public virtual async Task<ushort> ReadUInt16Async(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(2, cancellationToken);
+            await FillBufferAsync(2, cancellationToken).ConfigureAwait(false);
             return (ushort)(_buffer[0] | _buffer[1] << 8);
         }
 
         public virtual async Task<int> ReadInt32Async(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(4, cancellationToken);
+            await FillBufferAsync(4, cancellationToken).ConfigureAwait(false);
             return _buffer[0] | _buffer[1] << 8 | _buffer[2] << 16 | _buffer[3] << 24;
         }
 
         public virtual async Task<uint> ReadUInt32Async(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(4, cancellationToken);
+            await FillBufferAsync(4, cancellationToken).ConfigureAwait(false);
             return (uint)(_buffer[0] | _buffer[1] << 8 | _buffer[2] << 16 | _buffer[3] << 24);
         }
 
         public virtual async Task<long> ReadInt64Async(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(8, cancellationToken);
+            await FillBufferAsync(8, cancellationToken).ConfigureAwait(false);
             uint lo = (uint)(_buffer[0] | _buffer[1] << 8 |
                              _buffer[2] << 16 | _buffer[3] << 24);
             uint hi = (uint)(_buffer[4] | _buffer[5] << 8 |
@@ -192,7 +192,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
 
         public virtual async Task<ulong> ReadUInt64Async(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(8, cancellationToken);
+            await FillBufferAsync(8, cancellationToken).ConfigureAwait(false);
             uint lo = (uint)(_buffer[0] | _buffer[1] << 8 |
                              _buffer[2] << 16 | _buffer[3] << 24);
             uint hi = (uint)(_buffer[4] | _buffer[5] << 8 |
@@ -203,7 +203,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
         //[SecuritySafeCritical]
         public virtual async Task<float> ReadSingleAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(4, cancellationToken);
+            await FillBufferAsync(4, cancellationToken).ConfigureAwait(false);
             uint tmpBuffer = (uint)(_buffer[0] | _buffer[1] << 8 | _buffer[2] << 16 | _buffer[3] << 24);
 
             unsafe
@@ -217,7 +217,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
         //[SecuritySafeCritical]
         public virtual async Task<double> ReadDoubleAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(8, cancellationToken);
+            await FillBufferAsync(8, cancellationToken).ConfigureAwait(false);
             uint lo = (uint)(_buffer[0] | _buffer[1] << 8 |
                     _buffer[2] << 16 | _buffer[3] << 24);
             uint hi = (uint)(_buffer[4] | _buffer[5] << 8 |
@@ -232,7 +232,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
 
         public virtual async Task<decimal> ReadDecimalAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await FillBufferAsync(16, cancellationToken);
+            await FillBufferAsync(16, cancellationToken).ConfigureAwait(false);
             try
             {
                 return ToDecimal(_buffer);
@@ -268,7 +268,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             int charsRead;
 
             // Length of the string in bytes, not chars
-            stringLength = await Read7BitEncodedIntAsync();
+            stringLength = await Read7BitEncodedIntAsync().ConfigureAwait(false);
             if (stringLength < 0)
             {
                 throw new IOException("invalid string length", stringLength);
@@ -294,7 +294,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             {
                 readLength = ((stringLength - currPos) > MaxCharBytesSize) ? MaxCharBytesSize : (stringLength - currPos);
 
-                n = await _stream.ReadAsync(_charBytes, 0, readLength, cancellationToken);
+                n = await _stream.ReadAsync(_charBytes, 0, readLength, cancellationToken).ConfigureAwait(false);
                 if (n == 0)
                 {
                     __Error.EndOfFile();
@@ -382,7 +382,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
                 int position = 0;
                 byte[] byteBuffer = null;
 
-                numBytes = await _stream.ReadAsync(_charBytes, 0, numBytes, cancellationToken);
+                numBytes = await _stream.ReadAsync(_charBytes, 0, numBytes, cancellationToken).ConfigureAwait(false);
                 byteBuffer = _charBytes;
 
                 if (numBytes == 0)
@@ -461,13 +461,13 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
                 // Assume 1 byte can be 1 char unless m_2BytesPerChar is true.
                 numBytes = _2BytesPerChar ? 2 : 1;
 
-                int r = await _stream.ReadByteAsync(cancellationToken);
+                int r = await _stream.ReadByteAsync(cancellationToken).ConfigureAwait(false);
                 _charBytes[0] = (byte)r;
                 if (r == -1)
                     numBytes = 0;
                 if (numBytes == 2)
                 {
-                    r = await _stream.ReadByteAsync(cancellationToken);
+                    r = await _stream.ReadByteAsync(cancellationToken).ConfigureAwait(false);
                     _charBytes[1] = (byte)r;
                     if (r == -1)
                         numBytes = 1;
@@ -527,7 +527,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
 
             // SafeCritical: we own the chars buffer, and therefore can guarantee that the index and count are valid
             char[] chars = new char[count];
-            int n = await InternalReadCharsAsync(chars, 0, count, cancellationToken);
+            int n = await InternalReadCharsAsync(chars, 0, count, cancellationToken).ConfigureAwait(false);
             if (n != count)
             {
                 char[] copy = new char[n];
@@ -574,7 +574,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             int numRead = 0;
             do
             {
-                int n = await _stream.ReadAsync(result, numRead, count, cancellationToken);
+                int n = await _stream.ReadAsync(result, numRead, count, cancellationToken).ConfigureAwait(false);
                 if (n == 0)
                     break;
                 numRead += n;
@@ -608,7 +608,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             // streams.
             if (numBytes == 1)
             {
-                n = await _stream.ReadByteAsync(cancellationToken);
+                n = await _stream.ReadByteAsync(cancellationToken).ConfigureAwait(false);
                 if (n == -1)
                     __Error.EndOfFile();
                 _buffer[0] = (byte)n;
@@ -617,7 +617,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
 
             do
             {
-                n = await _stream.ReadAsync(_buffer, bytesRead, numBytes - bytesRead, cancellationToken);
+                n = await _stream.ReadAsync(_buffer, bytesRead, numBytes - bytesRead, cancellationToken).ConfigureAwait(false);
                 if (n == 0)
                 {
                     __Error.EndOfFile();
@@ -641,7 +641,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
                     throw new FormatException("Format_Bad7BitInt32");
 
                 // ReadByte handles end of stream cases for us.
-                b = await ReadByteAsync();
+                b = await ReadByteAsync().ConfigureAwait(false);
                 count |= (b & 0x7F) << shift;
                 shift += 7;
             } while ((b & 0x80) != 0);

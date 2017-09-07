@@ -101,7 +101,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
 
         public virtual async Task<Stream> GetBaseStreamAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await OutStream.FlushAsync(cancellationToken);
+            await OutStream.FlushAsync(cancellationToken).ConfigureAwait(false);
             return OutStream;
         }
 
@@ -372,7 +372,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             Contract.EndContractBlock();
 
             int len = _encoding.GetByteCount(value);
-            await Write7BitEncodedIntAsync(len, cancellationToken);
+            await Write7BitEncodedIntAsync(len, cancellationToken).ConfigureAwait(false);
 
             if (_largeByteBuffer == null)
             {
@@ -384,7 +384,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             {
                 //Contract.Assert(len == _encoding.GetBytes(chars, 0, chars.Length, _largeByteBuffer, 0), "encoding's GetByteCount & GetBytes gave different answers!  encoding type: "+_encoding.GetType().Name);
                 _encoding.GetBytes(value, 0, value.Length, _largeByteBuffer, 0);
-                await OutStream.WriteAsync(_largeByteBuffer, 0, len, cancellationToken);
+                await OutStream.WriteAsync(_largeByteBuffer, 0, len, cancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -427,7 +427,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
                     totalBytes += byteLen;
                     Contract.Assert (totalBytes <= len && byteLen <= _largeByteBuffer.Length, "BinaryWriter::Write(String) - More bytes encoded than expected!");
 #endif
-                    await OutStream.WriteAsync(_largeByteBuffer, 0, byteLen, cancellationToken);
+                    await OutStream.WriteAsync(_largeByteBuffer, 0, byteLen, cancellationToken).ConfigureAwait(false);
                     charStart += charCount;
                     numLeft -= charCount;
                 }
@@ -444,10 +444,10 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             uint v = (uint)value;   // support negative numbers
             while (v >= 0x80)
             {
-                await WriteAsync((short)(byte)(v | 0x80), cancellationToken);
+                await WriteAsync((short)(byte)(v | 0x80), cancellationToken).ConfigureAwait(false);
                 v >>= 7;
             }
-            await WriteAsync((short)(byte)v, cancellationToken);
+            await WriteAsync((short)(byte)v, cancellationToken).ConfigureAwait(false);
         }
     }
 }
