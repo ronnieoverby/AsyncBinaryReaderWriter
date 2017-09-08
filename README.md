@@ -2,3 +2,14 @@
 
 # AsyncBinaryReaderWriter
 AsyncBinaryReader and AsyncBinaryWriter for .NET
+
+
+```
+PM> Install-Package Overby.Extensions.AsyncBinaryReaderWriter
+```
+
+OR
+
+```
+dotnet add package Overby.Extensions.AsyncBinaryReaderWriter
+```

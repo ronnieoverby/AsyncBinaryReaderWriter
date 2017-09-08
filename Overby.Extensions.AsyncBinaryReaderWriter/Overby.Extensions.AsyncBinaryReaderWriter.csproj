@@ -15,7 +15,7 @@
     <Description>Asynchronous versions of the BinaryReader and BinaryWriter classes.</Description>
     <Copyright>Ronnie Overby 2017</Copyright>
     <RepositoryUrl>https://github.com/ronnieoverby/AsyncBinaryReaderWriter</RepositoryUrl>
-    <PackageProjectUrl />
+    <PackageProjectUrl>https://github.com/ronnieoverby/AsyncBinaryReaderWriter</PackageProjectUrl>
     <PackageVersion>1.0.0</PackageVersion>
   </PropertyGroup>
 
