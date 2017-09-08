@@ -8,6 +8,14 @@
 
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>Ronnie Overby</Authors>
+    <Company />
+    <Product />
+    <Description>Asynchronous versions of the BinaryReader and BinaryWriter classes.</Description>
+    <Copyright>Ronnie Overby 2017</Copyright>
+    <RepositoryUrl>https://github.com/ronnieoverby/AsyncBinaryReaderWriter</RepositoryUrl>
+    <PackageProjectUrl />
   </PropertyGroup>
 
 </Project>

@@ -1,5 +1,4 @@
 ﻿using Overby.Extensions.AsyncBinaryReaderWriter;
-using System.Text;
 using Xunit;
 
 namespace CoreTests
