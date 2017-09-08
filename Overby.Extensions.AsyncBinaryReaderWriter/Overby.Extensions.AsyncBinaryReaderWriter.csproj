@@ -16,6 +16,7 @@
     <Copyright>Ronnie Overby 2017</Copyright>
     <RepositoryUrl>https://github.com/ronnieoverby/AsyncBinaryReaderWriter</RepositoryUrl>
     <PackageProjectUrl />
+    <PackageVersion>1.0.0</PackageVersion>
   </PropertyGroup>
 
 </Project>
