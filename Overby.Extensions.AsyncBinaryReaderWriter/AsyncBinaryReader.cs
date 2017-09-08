@@ -268,7 +268,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             int charsRead;
 
             // Length of the string in bytes, not chars
-            stringLength = await Read7BitEncodedIntAsync().ConfigureAwait(false);
+            stringLength = await Read7BitEncodedIntAsync(cancellationToken).ConfigureAwait(false);
             if (stringLength < 0)
             {
                 throw new IOException("invalid string length", stringLength);
@@ -626,7 +626,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             } while (bytesRead < numBytes);
         }
 
-        internal protected async Task<int> Read7BitEncodedIntAsync()
+        internal protected async Task<int> Read7BitEncodedIntAsync(CancellationToken ct)
         {
             // Read out an Int32 7 bits at a time.  The high bit
             // of the byte when on means to continue reading more bytes.
@@ -641,7 +641,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
                     throw new FormatException("Format_Bad7BitInt32");
 
                 // ReadByte handles end of stream cases for us.
-                b = await ReadByteAsync().ConfigureAwait(false);
+                b = await ReadByteAsync(ct).ConfigureAwait(false);
                 count |= (b & 0x7F) << shift;
                 shift += 7;
             } while ((b & 0x80) != 0);
