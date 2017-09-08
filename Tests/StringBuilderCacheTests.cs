@@ -14,13 +14,6 @@ namespace CoreTests
         }
 
         [Fact]
-        public void CanRelease()
-        {
-            var sb = StringBuilderCache.Acquire();
-            StringBuilderCache.Release(sb);
-        }
-
-        [Fact]
         public void CanGetStringAndRelease()
         {
             const string s1 = nameof(CanGetStringAndRelease);

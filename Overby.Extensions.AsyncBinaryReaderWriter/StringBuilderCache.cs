@@ -18,7 +18,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
         private static readonly Lazy<Func<int, StringBuilder>> _acquire = new Lazy<Func<int, StringBuilder>>(CreateAcquireDelegate);
 
         private static Func<int, StringBuilder> CreateAcquireDelegate()
-        {
+        {            
             var exp_capacity = Expression.Parameter(typeof(int));
             var acquireInfo = type.GetMethod(nameof(Acquire),
                 BindingFlags.Static | BindingFlags.Public);
@@ -26,22 +26,7 @@ namespace Overby.Extensions.AsyncBinaryReaderWriter
             var exp_call_acquire = Expression.Call(acquireInfo, exp_capacity);
             var lambda = Expression.Lambda(exp_call_acquire, exp_capacity);
             return (Func<int, StringBuilder>)lambda.Compile();
-        }
-
-        public static void Release(StringBuilder sb) =>
-            _release.Value(sb);
-
-        private static readonly Lazy<Action<StringBuilder>> _release = new Lazy<Action<StringBuilder>>(CreateReleaseDelegate);
-
-        private static Action<StringBuilder> CreateReleaseDelegate()
-        {
-            var exp_sb = Expression.Parameter(typeof(StringBuilder));
-            var releaseMethod = type.GetMethod(nameof(Release),
-                BindingFlags.Static | BindingFlags.Public);
-            var exp_call_release = Expression.Call(releaseMethod, exp_sb);
-            var lambda = Expression.Lambda(exp_call_release, exp_sb);
-            return (Action<StringBuilder>)lambda.Compile();
-        }
+        }     
 
         public static string GetStringAndRelease(StringBuilder sb) =>
             _getStringAndRelease.Value(sb);
