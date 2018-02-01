@@ -17,6 +17,7 @@
     <RepositoryUrl>https://github.com/ronnieoverby/AsyncBinaryReaderWriter</RepositoryUrl>
     <PackageProjectUrl>https://github.com/ronnieoverby/AsyncBinaryReaderWriter</PackageProjectUrl>
     <PackageVersion>1.0.0</PackageVersion>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/ronnieoverby/AsyncBinaryReaderWriter/release/LICENSE</PackageLicenseUrl>
   </PropertyGroup>
 
 </Project>
